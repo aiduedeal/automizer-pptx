@@ -2,13 +2,7 @@
   "name": "pptx-automizer",
   "version": "0.7.0-0",
   "description": "A template based pptx generator",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/singerla/pptx-automizer.git"
-  },
-  "author": "Thomas Singer <tsinger@gmx.de> (github.com/singerla)",
-  "license": "MIT",
-  "private": false,
+  "private": true,
   "scripts": {
     "build": "tsc",
     "dev": "nodemon -e ts --exec 'ts-node' src/dev.ts",
