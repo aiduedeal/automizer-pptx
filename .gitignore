@@ -1,0 +1,19 @@
+### Node
+node_modules/
+pptx/
+out/
+dist/
+
+### Editor
+workspace.code-workspace
+
+### Testing
+__tests__/images
+coverage/
+__tests__/pptx-output/
+__tests__/pptx-cache/
+
+### Customer related files
+__customer__/
+src/dev-customer.ts
+
