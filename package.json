@@ -1,6 +1,6 @@
 {
-  "name": "automizer-pptx",
-  "version": "0.0.4",
+  "name": "@automizer-pptx/automizer-pptx",
+  "version": "0.0.5",
   "description": "A template based pptx generator",
   "publishConfig": {
     "registry": "https://us-central1-npm.pkg.dev/duedeal-staging/automizer-pptx/"
