@@ -47,7 +47,8 @@ jobs:
 
       - name: Configure npm authentication
         run: |
-          npx google-artifactregistry-auth \
+          npm install -g google-artifactregistry-auth
+          google-artifactregistry-auth \
             --repo-config=.npmrc \
             --credential-config=/home/runner/.npmrc
 
