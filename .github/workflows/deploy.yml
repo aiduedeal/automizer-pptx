@@ -1,0 +1,70 @@
+name: Deploy NPM Package
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  GCP_PROJECT_ID: duedeal-staging
+  GCP_PROJECT_NUMBER: 1054866004859
+  REGION: us-central1
+  REPOSITORY: automizer-pptx
+  WORKLOAD_IDENTITY_PROVIDER: projects/1054866004859/locations/global/workloadIdentityPools/github-actions-pool/providers/github
+  SERVICE_ACCOUNT: github-actions@duedeal-staging.iam.gserviceaccount.com
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://us-central1-npm.pkg.dev/duedeal-staging/automizer-pptx/'
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ env.WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ env.SERVICE_ACCOUNT }}
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ env.GCP_PROJECT_ID }}
+
+      - name: Configure npm authentication
+        run: |
+          npx google-artifactregistry-auth \
+            --repo-config=.npmrc \
+            --credential-config=/home/runner/.npmrc
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build package
+        run: npm run build
+
+      - name: Run tests
+        run: npm test
+
+      - name: Publish to Artifact Registry
+        run: npm publish
+
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
+        with:
+          generate_release_notes: true
