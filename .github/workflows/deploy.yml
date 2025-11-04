@@ -32,7 +32,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          registry-url: 'https://us-central1-npm.pkg.dev/duedeal-staging/automizer-pptx/'
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
@@ -47,9 +46,9 @@ jobs:
 
       - name: Configure npm authentication
         run: |
-          unset NPM_CONFIG_USERCONFIG
-          npm install -g google-artifactregistry-auth --registry=https://registry.npmjs.org/
-          npx google-artifactregistry-auth --repo-config=.npmrc --credential-config=.npmrc
+          # Configure authentication for Artifact Registry
+          echo "//us-central1-npm.pkg.dev/duedeal-staging/automizer-pptx/:always-auth=true" > .npmrc
+          echo "//us-central1-npm.pkg.dev/duedeal-staging/automizer-pptx/:_authToken=$(gcloud auth print-access-token)" >> .npmrc
           cat .npmrc
 
       - name: Install dependencies
