@@ -13,12 +13,12 @@ permissions:
   contents: read
 
 env:
-  GCP_PROJECT_ID: duedeal-staging
-  GCP_PROJECT_NUMBER: 1054866004859
+  GCP_PROJECT_ID: duedeal-test-migration-v4
+  GCP_PROJECT_NUMBER: 489526151649
   REGION: us-central1
   REPOSITORY: automizer-pptx
-  WORKLOAD_IDENTITY_PROVIDER: projects/1054866004859/locations/global/workloadIdentityPools/github-actions-pool/providers/github
-  SERVICE_ACCOUNT: github-actions@duedeal-staging.iam.gserviceaccount.com
+  WORKLOAD_IDENTITY_PROVIDER: projects/489526151649/locations/global/workloadIdentityPools/github-actions-pool/providers/github
+  SERVICE_ACCOUNT: github-actions@duedeal-test-migration-v4.iam.gserviceaccount.com
 
 jobs:
   deploy:
@@ -47,8 +47,8 @@ jobs:
       - name: Configure npm authentication
         run: |
           # Configure authentication for Artifact Registry
-          echo "//us-central1-npm.pkg.dev/duedeal-staging/automizer-pptx/:always-auth=true" > .npmrc
-          echo "//us-central1-npm.pkg.dev/duedeal-staging/automizer-pptx/:_authToken=$(gcloud auth print-access-token)" >> .npmrc
+          echo "//us-central1-npm.pkg.dev/duedeal-test-migration-v4/automizer-pptx/:always-auth=true" > .npmrc
+          echo "//us-central1-npm.pkg.dev/duedeal-test-migration-v4/automizer-pptx/:_authToken=$(gcloud auth print-access-token)" >> .npmrc
           cat .npmrc
 
       - name: Install dependencies

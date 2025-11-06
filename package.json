@@ -3,7 +3,7 @@
   "version": "0.0.5",
   "description": "A template based pptx generator",
   "publishConfig": {
-    "registry": "https://us-central1-npm.pkg.dev/duedeal-staging/automizer-pptx/"
+    "registry": "https://us-central1-npm.pkg.dev/duedeal-test-migration-v4/automizer-pptx/"
   },
   "scripts": {
     "build": "tsc",
